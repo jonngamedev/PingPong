@@ -34,7 +34,7 @@ public class RestartMenu : MonoBehaviour
         {
             if (Application.isEditor)
             {
-                EditorApplication.ExitPlaymode();
+                //EditorApplication.ExitPlaymode();
             }
             else
             {

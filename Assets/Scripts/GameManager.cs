@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
 
 
     [SerializeField] private int playerMaxLife = 3;
+    [Range(0.1f, 1f)]
+    [SerializeField] float timeScale = 0.5f;
 
     private InGameMenuControl inGameMenuControl;
     private RestartMenu restartMenu;
@@ -106,5 +108,7 @@ public class GameManager : MonoBehaviour
         inGameMenuControl = GetComponent<InGameMenuControl>();
         statusBar = GetComponent<StatusBar>();
         restartMenu = GetComponent<RestartMenu>();
+
+        Time.timeScale = timeScale;
     }
 }

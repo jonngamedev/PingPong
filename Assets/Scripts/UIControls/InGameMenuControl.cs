@@ -7,7 +7,7 @@ public class InGameMenuControl : MonoBehaviour
     [Header("Add References")]
     [SerializeField] GameObject inGameMenu;
     [SerializeField] Button contniue;
-    [SerializeField] Button exitGame;
+    [SerializeField] Button exitGame;   
 
     private GameObject ball;
 
@@ -34,7 +34,7 @@ public class InGameMenuControl : MonoBehaviour
         {
             if (Application.isEditor)
             {
-                EditorApplication.ExitPlaymode();
+                //EditorApplication.ExitPlaymode();
             }
             else
             {

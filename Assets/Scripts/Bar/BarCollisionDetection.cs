@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionDetection : MonoBehaviour
+public class BarCollisionDetection : MonoBehaviour
 {
     [SerializeField] Vector2 forceToBall = new Vector2(0,1);
 
