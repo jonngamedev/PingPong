@@ -38,18 +38,22 @@ public class BarPositionControl : MonoBehaviour
         sliderPositionControl.value = 0;
     }
 
-    public void PlaceBarAtCentre()
+    public void PlaceBarAtCentre(GameObject gameObject = null)
     {   
         // Place bar at centre
         barStartPosition = transform.position;
         barStartPosition.x = 0;
         transform.position = barStartPosition;
         barCurrentPosition = barStartPosition;
+
+        // Reset slider
+        sliderPositionControl.value = 0;
     }
 
     private void SubscribeEvents()
     {
         sliderPositionControl.onValueChanged.AddListener(delegate { UpdateBarPosition(sliderPositionControl.value);});
+        BallDestroyer.OnBallDisable += PlaceBarAtCentre;
     }
 
     private void Initializations()
