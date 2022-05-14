@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3205667130881925990}
   - component: {fileID: 6763984054491562281}
   - component: {fileID: 3205667130881925991}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Brick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
-  collider: {fileID: 6763984054491562281}
+  brickCollider: {fileID: 0}
   colorLevels:
   - {r: 0.990566, g: 0.990566, b: 0.9578586, a: 1}
   - {r: 1, g: 0.7582418, b: 0, a: 1}

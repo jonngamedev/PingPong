@@ -16,6 +16,7 @@ public class WallSettings : MonoBehaviour
         SetWallPositionAndSize();
     }   
 
+    // Auto set wall positions and scale as per screen size
     private void SetWallPositionAndSize()
     {
         switch (wallType)

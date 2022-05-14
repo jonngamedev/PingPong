@@ -44,14 +44,7 @@ public class RestartMenu : MonoBehaviour
 
         exitGame.onClick.AddListener(delegate
         {
-            if (Application.isEditor)
-            {
-                //EditorApplication.ExitPlaymode();
-            }
-            else
-            {
-                Application.Quit();
-            }           
+             Application.Quit();
         });
     }
 }

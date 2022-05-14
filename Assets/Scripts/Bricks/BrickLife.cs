@@ -4,14 +4,14 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class BrickLife : MonoBehaviour
+public class BrickLife : MonoBehaviour, IReceiveDamage
 {
     public static Action<Vector3> OnBrickDestroy;
     public static Action<Vector3> OnBrickGuard;
 
     [Range(1,5)]
     [SerializeField] private int health = 5;
-    [SerializeField] private Collider2D collider;
+    [SerializeField] private Collider2D brickCollider;
     [SerializeField] private List<Color> colorLevels;
 
     private int startHealth;
@@ -22,6 +22,7 @@ public class BrickLife : MonoBehaviour
     // Original health should be equal to user provided health
     private void Awake()
     {
+        // Storing initial health as start health for level replay
         startHealth = health;
     }
 
@@ -31,7 +32,7 @@ public class BrickLife : MonoBehaviour
     }
 
 
-    // On Reactivating bricks original health should restore
+    // On level restart, bricks original health should restore
     private void OnEnable()
     {
         if (isFirstPass)
@@ -41,17 +42,18 @@ public class BrickLife : MonoBehaviour
         else
         {
             health = startHealth;
-            collider.enabled = true;
+            brickCollider.enabled = true;
             SetBrickColor();           
         }
       
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void ReceiveDamage(int damage)
     {        
-        health -= 1;
+        health -= damage;
         SetBrickColor();
 
+        // Brick Destroyed
         if (health <= 0)
         {            
             if (OnBrickDestroy != null)
@@ -59,9 +61,10 @@ public class BrickLife : MonoBehaviour
                 OnBrickDestroy(brickPosition);
             }
 
-            collider.enabled = false;
+            brickCollider.enabled = false;
             this.gameObject.SetActive(false);
         }
+        // Brick health is down
         else
         {
             if (OnBrickGuard != null)
@@ -71,7 +74,6 @@ public class BrickLife : MonoBehaviour
         }
         
     }
-
 
     private void SetBrickColor()
     {
@@ -86,11 +88,10 @@ public class BrickLife : MonoBehaviour
         brickPosition = transform.position;
         startHealth = health;
 
-        collider = GetComponent<Collider2D>();
+        brickCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         
         SetBrickColor();
     }
-
-
+   
 }

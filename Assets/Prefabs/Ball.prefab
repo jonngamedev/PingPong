@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1969454894128392638}
   - component: {fileID: 1969454894128392639}
   - component: {fileID: 1969454894128392576}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,3 +136,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballCentrePosition: {x: 0, y: -3.7, z: 0}
   forcetoBall: {x: 10, y: 35}
+  damage: 1

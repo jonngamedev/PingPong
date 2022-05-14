@@ -104,6 +104,23 @@ public class GameManager : MonoBehaviour
         restartMenu.IsActivateMenu(true, true);
     }
 
+
+    public void ApplyPowerUp(Utilities.PowerUpTypes powerUpType)
+    {
+        switch (powerUpType)
+        {
+            case Utilities.PowerUpTypes.Health:        
+                statusBar.AddLife();
+                playerLife += 1;
+                break;
+            case Utilities.PowerUpTypes.DoubleHit:
+                gameBall.GetComponent<BallControl>().DoubleDamage();
+                break;
+            default:
+                break;
+        }
+    }
+
     private void SubscribeEvents()
     {
         BallDestroyer.OnBallDisable += OnBallDisable;

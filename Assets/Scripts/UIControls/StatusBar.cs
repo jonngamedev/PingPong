@@ -12,6 +12,7 @@ public class StatusBar : MonoBehaviour
     private void GetLifeObjects()
     {
         Transform[] bufferArray = lifeBar.GetComponentsInChildren<Transform>();
+        lifeHeart.Clear();
 
         for (int lifeIndex = 1; lifeIndex < bufferArray.Length; lifeIndex++)
         {
@@ -19,6 +20,22 @@ public class StatusBar : MonoBehaviour
         }
     }
 
+    public void AddLife()
+    {        
+        // If disabled life prefab is already there, reactivate
+        for (int lifeIndex = 0; lifeIndex < lifeHeart.Count; lifeIndex++)
+        {
+            if (lifeHeart[lifeIndex].activeSelf == false)
+            {
+                lifeHeart[lifeIndex].SetActive(true);
+                return;
+            }
+        }
+
+        // Add new prefab
+        Instantiate(heartPrefab, lifeBar.transform);
+        GetLifeObjects();
+    }
 
     public void AddLifePrefabs(int numberOfHearts)
     {

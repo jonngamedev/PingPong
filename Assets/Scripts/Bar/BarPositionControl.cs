@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class BarPositionControl : MonoBehaviour
 {
-    [Header("Required References")]
+    [Header("Add References")]
     [SerializeField] Slider sliderPositionControl;
 
     private Sprite barSprite;
@@ -19,16 +18,21 @@ public class BarPositionControl : MonoBehaviour
         Initializations();        
     }
 
-    private void UpdateBarPosition(float xValue)
+    // Update bar position in as per slider value
+    // Whenever there is a change in slider position
+    private void UpdateBarPosition(float sliderValue)
     {
-        barCurrentPosition.x = xValue;
+        barCurrentPosition.x = sliderValue;
         transform.position = barCurrentPosition;
     }
 
+
+    // Set slider movement as per screen size
     private void SetSliderMovementLimits()
     {       
         // Evaluate Bar width
         barSprite = GetComponent<SpriteRenderer>().sprite;
+
         // Bar width is same as bounds because while importing pixel per unit is equal to it's size
         barWidth = barSprite.bounds.size.x;
 
@@ -38,6 +42,8 @@ public class BarPositionControl : MonoBehaviour
         sliderPositionControl.value = 0;
     }
 
+
+    // Resetting bar position
     public void PlaceBarAtCentre(GameObject gameObject = null)
     {   
         // Place bar at centre
