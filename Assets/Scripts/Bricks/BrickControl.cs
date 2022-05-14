@@ -5,8 +5,10 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(AudioSource))]
-public class BrickEffects : MonoBehaviour
+public class BrickControl : MonoBehaviour
 {
+    public static Action OnAllBrickDestroy;
+
     [Header("Add References")]
     [SerializeField] private List<ParticleSystem> brickDestroyVfx;
     [SerializeField] private List<ParticleSystem> brickGuardVfx;
@@ -15,22 +17,60 @@ public class BrickEffects : MonoBehaviour
 
     private AudioSource audioSource;
     private int destroyVfxLength;
+    private int bricksInGame;
+    private BrickLife[] bricks;
 
     private void Start()
     {
         Initializations();
         SubscribeEvents();
+        CountBricksInGame();
     }
 
-   
-    private void PlayVFXAndSound(Vector3 position)
+    private void CountBricksInGame()
     {
+        bricks = GetComponentsInChildren<BrickLife>();
+        bricksInGame = bricks.Length;
+    }
+
+    public void ReActivateAllBricks()
+    {
+        bricksInGame = bricks.Length;
+        GameObject brickGameObject;
+
+        for (int brickIndex= 0; brickIndex < bricks.Length; brickIndex++)
+        {
+            brickGameObject = bricks[brickIndex].gameObject;
+
+            // Disable All Bricks
+            if (brickGameObject.activeSelf == true)
+            {
+                brickGameObject.SetActive(false);
+            }
+
+            // Enable all to reactivate original state
+            brickGameObject.SetActive(true);
+        }
+    }
+
+    private void PlayDestroyVFXAndSound(Vector3 position)
+    {
+        bricksInGame -= 1;
         audioSource.PlayOneShot(destroyAudioClip);
 
         int randomVfx = Random.Range(0, destroyVfxLength);
 
         brickDestroyVfx[randomVfx].transform.position = position;
-        brickDestroyVfx[randomVfx].Play();        
+        brickDestroyVfx[randomVfx].Play();
+
+        // All brick destroy event
+        if (bricksInGame <= 0)
+        {
+            if (OnAllBrickDestroy != null)
+            {
+                OnAllBrickDestroy();
+            }
+        }
     }
 
     private void PlayGuardVFXAndSound(Vector3 position)
@@ -42,7 +82,7 @@ public class BrickEffects : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        BrickLife.OnBrickDestroy += PlayVFXAndSound;
+        BrickLife.OnBrickDestroy += PlayDestroyVFXAndSound;
         BrickLife.OnBrickGuard += PlayGuardVFXAndSound;
     }
 

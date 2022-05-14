@@ -47,13 +47,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int playerMaxLife = 3;
     [Range(0.1f, 1f)]
     [SerializeField] float timeScale = 0.5f;
+    [SerializeField] private BrickControl brickControl;
+    [SerializeField] private GameObject gameBall;
 
     private InGameMenuControl inGameMenuControl;
     private RestartMenu restartMenu;
-    private StatusBar statusBar;
+    private StatusBar statusBar;    
 
-    private int playerLife;    
-    private GameObject gameBall;
+    private int playerLife;        
 
 
     private void Start()
@@ -76,6 +77,7 @@ public class GameManager : MonoBehaviour
         playerLife = playerMaxLife;
         statusBar.RefillHealthBar();
 
+        brickControl.ReActivateAllBricks();
         ActivateBall();
     }
 
@@ -91,14 +93,21 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            restartMenu.IsActivateMenu(true);
+            restartMenu.IsActivateMenu(true, false);
         }
     }
 
 
+    private void GameWinMenu()
+    {
+        gameBall.SetActive(false);
+        restartMenu.IsActivateMenu(true, true);
+    }
+
     private void SubscribeEvents()
     {
-        BallDestroyer.OnBallDisable += OnBallDisable;        
+        BallDestroyer.OnBallDisable += OnBallDisable;
+        BrickControl.OnAllBrickDestroy += GameWinMenu;
     }
 
     private void Initializations()
@@ -108,6 +117,7 @@ public class GameManager : MonoBehaviour
         inGameMenuControl = GetComponent<InGameMenuControl>();
         statusBar = GetComponent<StatusBar>();
         restartMenu = GetComponent<RestartMenu>();
+        
 
         Time.timeScale = timeScale;
     }

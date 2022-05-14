@@ -6,6 +6,9 @@ public class RestartMenu : MonoBehaviour
 {
     [Header("Add References")]
     [SerializeField] GameObject restartMenu;
+    [SerializeField] Image displayImage;
+    [SerializeField] Sprite winSprite;
+    [SerializeField] Sprite gameOverSprite;
     [SerializeField] Button restart;
     [SerializeField] Button exitGame;
 
@@ -17,9 +20,18 @@ public class RestartMenu : MonoBehaviour
         restartMenu.SetActive(false);
     }
 
-    public void IsActivateMenu(bool isActive)
+    public void IsActivateMenu(bool isActive, bool isWin)
     {
         restartMenu.SetActive(isActive);
+
+        if (isWin)
+        {
+            displayImage.sprite = winSprite;
+        }
+        else
+        {
+            displayImage.sprite = gameOverSprite;
+        }
     }
    
     private void SubscribeEvents()

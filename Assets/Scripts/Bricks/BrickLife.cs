@@ -10,19 +10,43 @@ public class BrickLife : MonoBehaviour
     public static Action<Vector3> OnBrickGuard;
 
     [Range(1,5)]
-    [SerializeField] private int health = 1;
+    [SerializeField] private int health = 5;
     [SerializeField] private Collider2D collider;
     [SerializeField] private List<Color> colorLevels;
-    
+
+    private int startHealth;
     private Vector3 brickPosition;
     private SpriteRenderer spriteRenderer;
+    private bool isFirstPass = true;
 
+    // Original health should be equal to user provided health
+    private void Awake()
+    {
+        startHealth = health;
+    }
 
     private void Start()
     {
         Initializations();
     }
-    
+
+
+    // On Reactivating bricks original health should restore
+    private void OnEnable()
+    {
+        if (isFirstPass)
+        {
+            isFirstPass = false;
+        }
+        else
+        {
+            health = startHealth;
+            collider.enabled = true;
+            SetBrickColor();           
+        }
+      
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {        
         health -= 1;
@@ -60,6 +84,7 @@ public class BrickLife : MonoBehaviour
     private void Initializations()
     {
         brickPosition = transform.position;
+        startHealth = health;
 
         collider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
