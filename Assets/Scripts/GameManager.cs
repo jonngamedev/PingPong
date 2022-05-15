@@ -109,9 +109,12 @@ public class GameManager : MonoBehaviour
     {
         switch (powerUpType)
         {
-            case Utilities.PowerUpTypes.Health:        
-                statusBar.AddLife();
-                playerLife += 1;
+            case Utilities.PowerUpTypes.Health:
+                if (playerLife < playerMaxLife)
+                {
+                    playerLife += 1;
+                    statusBar.AddLife();
+                }                            
                 break;
             case Utilities.PowerUpTypes.DoubleHit:
                 gameBall.GetComponent<BallControl>().DoubleDamage();

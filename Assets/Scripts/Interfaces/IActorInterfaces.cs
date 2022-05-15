@@ -16,3 +16,12 @@ public interface IReceiveDamage
     /// <param name="damage"></param>
     void ReceiveDamage(int damage);
 }
+
+public interface IPowerUpSFX
+{
+    /// <summary>
+    /// Play SFX on basis of power up sound
+    /// </summary>
+    /// <param name="powerUpType"></param>
+    void PlaySFX(Utilities.PowerUpTypes powerUpType);
+}

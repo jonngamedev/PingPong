@@ -14,7 +14,7 @@ public class BallDestroyer : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {        
-        if (isBallDestroyer)
+        if (isBallDestroyer && collision.gameObject.tag != Utilities.powerUpTag)
         {
             // Disable Ball
             collision.gameObject.SetActive(false);

@@ -9,13 +9,19 @@ public class BrickControl : MonoBehaviour
 {
     public static Action OnAllBrickDestroy;
 
-    [Header("Add References")]
+    [Header("VFX")]
     [SerializeField] private List<ParticleSystem> brickDestroyVfx;
     [SerializeField] private List<ParticleSystem> brickGuardVfx;
+
+    [Header("SFX")]
     [SerializeField] private AudioClip destroyAudioClip;
     [SerializeField] private AudioClip guardAudioClip;
     [SerializeField] private AudioClip powerUpAudioClip;
+
+    [Header("Power Ups")]
+    [SerializeField] private GameObject powerUpParent;
     [SerializeField] private GameObject[] powerUpPrefabs;
+    
  
     private AudioSource audioSource;
     private int destroyVfxLength;
@@ -100,7 +106,7 @@ public class BrickControl : MonoBehaviour
         {
             // Get random powerup index   
             int powerUpRandomIndex = Random.Range(0, totalPowerUps);
-            Instantiate(powerUpPrefabs[powerUpRandomIndex], position, Quaternion.identity);
+            Instantiate(powerUpPrefabs[powerUpRandomIndex], position, Quaternion.identity, powerUpParent.transform);
             audioSource.PlayOneShot(powerUpAudioClip);
         }
     }

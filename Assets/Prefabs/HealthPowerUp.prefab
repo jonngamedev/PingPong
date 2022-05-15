@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7337208808360080563}
   m_Layer: 9
   m_Name: HealthPowerUp
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,3 +145,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpType: 0
+  powerUpAudioClip: {fileID: 8300000, guid: e45f5c3cfebb8304daac2a9a03987ce6, type: 3}
